@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>TensorHub</title>
+    <link rel="icon" href="logoabout.png" type="image/x-icon" sizes="16x16">
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+
+    <!-- Metadata
+    ================================================== -->
+    <meta property="og:title" content="TensorHub">
+    <meta property="og:description" content="">
+    <meta property="og:url" content="index.html">
+    <meta property="og:image" content="data/betlogo.png">
+    <meta property="og:site_name" content="TensorHub">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="Grokbnb.xyz">
+    <meta property="twitter:url" content="index.html">
+    <meta name="twitter:title" content="TensorHub">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="data/betlogo.png">
+
+    <!-- CSS Files
+    ================================================== -->
+    <link href="data/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap">
+    <link href="data/plugins.css" rel="stylesheet" type="text/css">
+    <link href="data/style.css" rel="stylesheet" type="text/css">
+    <link href="data/custom-style-1.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        :root {
+            --primary-color: #2073d2;
+            --primary-color-rgb: 54, 210, 205;
+        }
+
+        .half-color {
+            position: relative;
+            display: inline-block;
+            color: #2073d2;
+        }
+
+        .half-color:before {
+            position: absolute;
+            content: attr(attribute);
+            width: 50%;
+            overflow: hidden;
+            color: white;
+        }
+
+        .menu-button {
+            margin: 7px;
+        }
+    </style>
+    <link href="data/coloring.css" rel="stylesheet" type="text/css">
+    <style>
+        .parallax {
+            /* The image used */
+            background-image: url("data/3.png");
+            /* Set a specific height */
+            min-height: 500px;
+            /* Create the parallax scrolling effect */
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+    <!-- Coingecko Price Fetcher
+    ================================================== -->
+    <script src="data/axios.min.js"></script>
+    <script>
+        const TOKEN_ADDRESS = "0x";
+
+        const getPrice = async () => {
+            try {
+                const response = await axios.get(
+                    `https://api.coingecko.com/api/v3/simple/token_price/BSCereum?contract_addresses=${TOKEN_ADDRESS}&vs_currencies=usd`
+                );
+                const tokenPrice = Math.floor(response.data[TOKEN_ADDRESS].usd * 10000);
+                document.getElementById("token-price").textContent = `${(tokenPrice / 10000).toFixed(4)} USD`;
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+
+        getPrice();
+    </script>
+    <style>
+        INPUT:-webkit-autofill,
+        SELECT:-webkit-autofill,
+        TEXTAREA:-webkit-autofill {
+            animation-name: onautofillstart
+        }
+
+        INPUT:not(:-webkit-autofill),
+        SELECT:not(:-webkit-autofill),
+        TEXTAREA:not(:-webkit-autofill) {
+            animation-name: onautofillcancel
+        }
+
+        @keyframes onautofillstart {
+            from {}
+        }
+
+        @keyframes onautofillcancel {
+            from {}
+        }
+    </style>
+    <style type="text/css" id="ctre_styles">
+        #ctre_wnd {
+            position: fixed;
+            bottom: 0;
+            right: 10px;
+            width: 360px;
+            padding: 10px 20px;
+            box-sizing: content-box;
+            text-align: left;
+            font-family: Helvetica, Arial, sans-serif;
+            background: #fff;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.15);
+            z-index: 2147483647;
+            font-size: 12px;
+            color: #666;
+        }
+
+        #ctre_wnd * {
+            line-height: 1.3;
+            font-size: inherit;
+            color: inherit;
+            font-weight: normal;
+            font-style: normal;
+            font-family: inherit;
+            cursor: default;
+        }
+
+        #ctre_wnd a,
+        #ctre_wnd input[type=checkbox] {
+            cursor: pointer;
+        }
+
+        #ctre_wnd .ct_minimize,
+        #ctre_wnd .ct_close {
+            display: block;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 32px;
+            line-height: 32px;
+            font-size: 14px;
+            text-align: center;
+            transition: color 0.3s, background 0.3s;
+        }
+
+        #ctre_wnd .ct_minimize {
+            right: 32px;
+            background: #fff;
+            color: #0fb4d4;
+        }
+
+        #ctre_wnd .ct_minimize:hover {
+            background: #0fb4d4;
+            color: #fff;
+        }
+
+        #ctre_wnd .ct_minimize i {
+            display: inline-block;
+            cursor: pointer;
+            transform: rotate(45deg);
+            transition: transform 0.5s;
+        }
+
+        #ctre_wnd .ct_close {
+            color: #f00;
+            background: #fff0f0;
+        }
+
+        #ctre_wnd .ct_close:hover {
+            color: #fff;
+            background: #f00;
+        }
+
+        #ctre_wnd .key {
+            display: inline-block;
+            font-family: monospace;
+            background: #f7f7f7;
+            color: #999;
+            padding: 0 2px;
+            margin: 0 2px;
+            border: solid 1px #d5d5d5;
+            border-radius: 3px;
+        }
+
+        #ctre_wnd .ct_logo {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        #ctre_wnd .ct_logo.small {
+            display: none;
+        }
+
+        #ctre_wnd .ct_logo svg {
+            fill: #666;
+            vertical-align: -15%;
+            transform: rotate(-240deg);
+            transition: transform 1s;
+        }
+
+        #ctre_wnd .ct_logo.anim svg {
+            transform: rotate(0deg);
+        }
+
+        #ctre_wnd .version {
+            color: #bbb;
+        }
+
+        #ctre_wnd .keys {
+            font-size: 11px;
+            overflow: hidden;
+            margin-top: 4px;
+            color: #bbb;
+        }
+
+        #ctre_wnd .ct_settings {
+            font-size: 11px;
+            overflow: hidden;
+            margin: 8px 0;
+            color: #bbb;
+        }
+
+        #ctre_wnd .ct_settings a {
+            color: #999;
+        }
+
+        #ctre_wnd .ct_settings a:hover {
+            color: #666;
+        }
+
+        #ctre_wnd .activationKeys {
+            float: left;
+            margin-left: -2px;
+        }
+
+        #ctre_wnd .transposeKeys {
+            float: right;
+        }
+
+        #ctre_current_elm {
+            font-family: monospace;
+            background: #f7f7f7;
+            color: #d5d5d5;
+            padding: 2px;
+            margin: 10px 0;
+            max-height: 84px;
+            overflow: hidden;
+        }
+
+        #ctre_current_elm .pathNode {
+            color: #999;
+            border-bottom: solid 2px rgba(0, 0, 0, 0);
+        }
+
+        #ctre_current_elm .pathNode.active {
+            border-bottom: solid 2px #555;
+        }
+
+        #ctre_elm_list {
+            display: none;
+            margin: 0 -20px;
+            background: #f7f7f7;
+            border: solid 12px #f7f7f7;
+            border-width: 12px 0 12px 0;
+            max-height: 90px;
+            overflow: auto;
+        }
+
+        #ctre_elm_list.hasContent {
+            display: block;
+        }
+
+        #ctre_elm_list table {
+            border: 0;
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        #ctre_elm_list tr {
+            border: 0;
+        }
+
+        #ctre_elm_list tr.ct_heading td {
+            color: #bbb;
+        }
+
+        #ctre_elm_list td {
+            padding: 0;
+            border: 0;
+            background: #f7f7f7;
+        }
+
+        #ctre_elm_list tr:nth-child(even) td {
+            background: #fcfcfc;
+        }
+
+        #ctre_elm_list td:nth-child(1) {
+            padding-left: 20px;
+        }
+
+        #ctre_elm_list td:nth-child(2) {
+            text-align: center;
+        }
+
+        #ctre_elm_list td:nth-child(3) {
+            padding-right: 20px;
+        }
+
+        #ctre_elm_list tr:not(.ct_heading) td:nth-child(1) {
+            font-family: monospace;
+            font-size: 11px;
+        }
+
+        #ctre_elm_list td input {
+            display: inline;
+            -webkit-appearance: checkbox;
+        }
+
+        #ctre_elm_list td input:before,
+        #ctre_elm_list td input:after {
+            content: none;
+        }
+
+        #ctre_elm_list .ct_edit_selector {
+            font-family: sans-serif;
+            float: right;
+            opacity: 0;
+            color: #0fb4d4;
+            text-decoration: none;
+        }
+
+        #ctre_elm_list .ct_edit_selector:hover {
+            color: #000;
+        }
+
+        #ctre_elm_list tr:hover .ct_edit_selector {
+            opacity: 1;
+        }
+
+        #ctre_elm_list a.ct_delete {
+            color: #f00;
+            padding: 4px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        #ctre_elm_list a.ct_delete:hover {
+            color: #fff;
+            background: #f00;
+        }
+
+        #ctre_wnd .ct_more {
+            border-top: solid 1px #f7f7f7;
+            margin: 0 -20px;
+            padding-top: 12px;
+            color: #bbb;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        #ctre_wnd .ct_more a {
+            color: #0fb4d4;
+            font-size: inherit;
+            text-decoration: none;
+            transition: color 0.5s;
+        }
+
+        #ctre_wnd .ct_more a:hover {
+            color: #000;
+        }
+
+        #ctre_wnd.minimized {
+            width: 80px;
+            height: 12px;
+        }
+
+        #ctre_wnd.minimized>* {
+            display: none;
+        }
+
+        #ctre_wnd.minimized .ct_minimize,
+        #ctre_wnd.minimized .ct_close {
+            display: block;
+        }
+
+        #ctre_wnd.minimized .ct_minimize i {
+            display: inline-block;
+            transform: rotate(-135deg);
+        }
+
+        #ctre_wnd.minimized .ct_logo.small {
+            display: block;
+            margin: -4px 0 0 -10px;
+        }
+    </style>
+</head>
+
+<body class="onepage dark-scheme" style="background-size: cover;">
+    <div id="wrapper" style="background-size: cover;">
+        <!-- header begin -->
+        <header class="transparent">
+            <div class="container" style="background-size: cover;">
+                <div class="row" style="background-size: cover;">
+                    <div class="col-md-12" style="background-size: cover;">
+                        <div class="de-flex sm-pt10" style="background-size: cover;">
+                            <div class="de-flex-col" style="background-size: cover;">
+                                <div class="de-flex-col" style="background-size: cover;">
+                                    <!-- logo begin -->
+                                    <div id="logo" style="background-size: cover;">
+                                        <a href="#">
+                                            <!-- <img alt="Home" class="logo" src="data/logo.png">
+                                            <img alt="Home" class="logo-2" src="data/logo.png">
+                                        </a> -->
+                                    </div>
+                                    <!-- logo close -->
+                                </div>
+                            </div>
+                            <div class="de-flex-col header-col-right" style="background-size: cover;">
+                                <ul id="mainmenu">
+                                    <li><a href="#about" class="">About<span></span></a></li>
+                                    <li><a href="#features" class="">Features<span></span></a></li>
+                                    <li><a href="#tokenomics">Tokenomics<span></span></a></li>
+                                    <!-- <li><a href="whitepaper.pdf">Whitepaper<span></span></a></li> -->
+                                    <li><a href="https://tensorhub.gitbook.io/documentation/">Docs<span></span></a></li>
+                                    <li><a href="https://app.uniswap.org/tokens/eth/" target="_blank" class="btn-main menu-button">Buy<span></span></a></li>
+                                    <li><a href="https://uniswap.org/tokens/" target="_blank" class="btn-main menu-button">Chart<span></span></a></li>
+                                    <!-- <li><a href="https" target="_blank" class="btn-main menu-button">Ave.ai<span></span></a></li> -->
+                                </ul>
+                                <div class="menu_side_area" style="background-size: cover;">
+                                    <span id="menu-btn"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- header close -->
+        <!-- content begin -->
+        <div class="no-bottom no-top" id="content" style="background-size: cover; margin-top: 0px;">
+            <div id="top" style="background-size: cover;"></div>
+
+            <!-- page preloader begin -->
+            <div id="preloader" style="background-size: cover; display: none;">
+                <div class="preloader1" style="top: 304px; background-size: cover;"></div>
+            </div>
+            <!-- page preloader close -->
+
+            <!-- load external content begin -->
+            <div id="de_modal" style="background-size: cover;">
+                <button class="button-close"></button>
+                <div class="d-modal-loader" style="background-size: cover;"></div>
+            </div>
+            <!-- load external content close -->
+
+            <section aria-label="section" class="jarallax no-top-md no-bottom" style="z-index: 0; background-size: cover;">
+                <br><br><br><br><br>
+                <div class="container" style="background-size: cover;">
+                    <div class="row align-items-center" style="background-size: cover;">
+                        <div class="col-md-5" style="background-size: cover;">
+                            <h5 class="s1 wow fadeInUp animated" data-wow-delay=".4s" style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+                                TensorHub</h5>
+                            <div class="spacer-10" style="background-size: cover;"></div>
+                            <div class="h1 text-white wow fadeInUp animated" data-wow-delay=".6s" style="background-size: cover; visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                                TensorHub<span class="id-color"></span><br>
+                                <div class="typed-strings" style="background-size: cover; display: none;">
+                                    <p>Trustworthy</p>
+                                    <p>Innovative</p>
+                                    <p>Impactful</p>
+                                </div>
+                                <!-- <div class="typed" style="background-size: cover;">Confid</div><span class="typed-cursor">|</span> -->
+                                <div class="spacer-20" style="background-size: cover;"></div>
+                                <ul class="list_location wow fadeInUp animated" data-wow-delay=".8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInUp;">
+                                    <li><a href="https://t.me/tensorhuberc" target="_blank" class="btn-main menu-button">Telegram<span></span></a></li>
+                                    <li><a href="https://www.tensorhub.app/" target="_blank" class="btn-main menu-button">Get Started<span></span></a></li>
+                                </ul>
+                            </div>
+                            <p class="wow fadeInUp animated" data-wow-delay=".6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                                Empowering AI Practitioners with GPU Renting and AI Model Hub
+                            </p>
+                        </div>
+                        <div class="col-md-6 offset-md-1 jarallax" style="background-size: cover;">
+                            <img src=".png" class="img-fluid wow fadeInUp animated" data-wow-delay=".8s" alt="" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInUp;">
+                        </div>
+                    </div>
+                </div>
+                <a href="#section-about" class="mouse-icon-click scroll-to wow fadeInUp animated" data-wow-delay=".8s" style="visibility: visible; animation-delay: 0.8s; animation-name: fadeInUp;">
+                    <span class="mouse fadeScroll relative" data-scroll-speed="10"
+                        style="transform: translateY(52.75px); opacity: 0;">
+                        <span class="scroll"></span>
+                    </span>
+                </a>
+                <div class="de-gradient-edge-bottom" style="background-size: cover;" id="tokenomics"></div>
+                <div id="jarallax-container-0" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; z-index: -100; clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0px 100%); background-size: cover;">
+                    <img src="data/3.png" class="jarallax-img" alt="" style="object-fit: cover; object-position: 50% 50%; max-width: none; position: absolute; top: 0px; left: 0px; width: 1296px; height: 662.098px; overflow: hidden; pointer-events: none; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; margin-top: 3.45117px; transform: translate3d(0px, 260.299px, 0px);">
+                </div>
+            </section>
+            <section id="section-fun-facts" aria-label="section" class="jarallax" style="background-size: cover;">
+                <div class="de-gradient-edge-top" style="background-size: cover;"></div>
+                <div class="container" style="background-size: cover;">
+                    <div class="row" style="background-size: cover;">
+                        <div class="col-md-4 wow fadeIn animated" data-wow-delay=".25s" style="background-size: cover; visibility: visible; animation-delay: 0.25s; animation-name: fadeIn;">
+                            <div class="de_count text-center" style="background-size: cover;">
+                                <h3 data-to="5000" data-speed="2500"> 100.000.000</h3>
+                                <span>Total Supply</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 wow fadeIn animated" data-wow-delay=".5s" style="background-size: cover; visibility: visible; animation-delay: 0.5s; animation-name: fadeIn;">
+                            <div class="de_count text-center" style="background-size: cover;">
+                                <h3 data-to="0" data-speed="2500" id="token-price">Liquidity</h3>
+                                <span>Locked</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 wow fadeIn animated" data-wow-delay=".75s" style="background-size: cover; visibility: visible; animation-delay: 0.75s; animation-name: fadeIn;">
+                            <div class="de_count text-center" style="background-size: cover;">
+                                <h3 data-to="5" data-speed="2500">Taxes</h3>
+                                <span>5%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="de-gradient-edge-bottom" style="background-size: cover;" id="about"></div>
+            </section>
+
+            <section id="section-about" class="no-bottom" style="background-size: cover;">
+                <div class="container relative" style="background-size: cover;">
+                    <div class="row align-items-center" style="background-size: cover;">
+                        <div class="col-md-6 wow fadeInUp animated" style="background-size: cover; visibility: visible; animation-name: fadeInUp;">
+                            <img src="logoabout.png" class="img-fluid" alt="">
+                        </div>
+                        <div class="col-md-6 wow fadeInUp animated" data-wow-delay=".2s" style="background-size: cover; visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                            <h2>About</h2>
+                            <p>With TensorHub, you gain access to a powerful GPU renting platform, allowing you to harness the immense computational power needed for your AI experiments. Say goodbye to waiting for ages for your models to train. We've got your back with lightning-fast GPUs to supercharge your work!<br> 
+                                <br>
+                               
+
+                               </p>
+                               <p>
+                                
+                           </p>
+                           <li><a href="https://www.tensorhub.app/" target="_blank" class="btn-main menu-button">Rent GPU<span></span></a></li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="section-solutions" class="no-bottom" style="background-size: cover;">
+                <div class="container relative" style="background-size: cover;" id="features">
+                    <div class="row" style="background-size: cover;">
+                        <div class="col-md-12 text-center wow fadeInUp animated" style="background-size: cover; visibility: visible; animation-name: fadeInUp;">
+                            <h2>Features</h2>
+                            <div class="space-border" style="background-size: cover;"></div>
+                        </div>
+                        <div class="spacer-single" style="background-size: cover;"></div>
+                        <div class="row g-0" style="background-size: cover;">
+                            <div class="col-lg-4 wow fadeIn animated" data-wow-delay=".2s" style="background-size: cover; visibility: visible; animation-delay: 0.2s; animation-name: fadeIn;">
+                                <div class="de_3d-box" style="background-size: cover;">
+                                    <div class="d-inner" style="background-size: cover;">
+
+                                        <div class="text" style="background-size: cover;">
+                                            <h3> Powerful Model Repository</h3>
+                                            TensorHub provides a vast repository of pre-trained models and code snippets, making it easy for developers to access and leverage cutting-edge AI models for their projects. Whether you need image recognition, natural language processing, or any other AI capability, TensorHub has got you covered.
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 wow fadeIn animated" data-wow-delay=".4s" style="background-size: cover; visibility: visible; animation-delay: 0.4s; animation-name: fadeIn;">
+                                <div class="de_3d-box" style="background-size: cover;">
+                                    <div class="d-inner" style="background-size: cover;">
+
+                                        <div class="text" style="background-size: cover;">
+                                            <h3>Collaborative Workspace</h3>
+                                            TensorHub offers a collaborative workspace where you can connect and collaborate with fellow AI practitioners and researchers. Share ideas, exchange knowledge, and work together on projects to accelerate your progress. It's like having a virtual AI community at your fingertips.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 wow fadeIn animated" data-wow-delay=".6s" style="background-size: cover; visibility: visible; animation-delay: 0.6s; animation-name: fadeIn;">
+                                <div class="de_3d-box" style="background-size: cover;">
+                                    <div class="d-inner" style="background-size: cover;">
+
+                                        <div class="text" style="background-size: cover;">
+                                            <h3>Simplified Deployment</h3>
+                                            TensorHub simplifies the deployment of AI models with its seamless integration with popular frameworks and platforms. Deploy your models to the cloud or edge devices with just a few clicks, and start making an impact in the real world. TensorHub takes care of the infrastructure complexities so you can focus on what you do best: building amazing AI applications.
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <li>
+                    <center><a href="https://t.me/tensorhuberc" target="_blank" class="btn-main menu-button">Community<span></span></a>
+                        <br><br>
+                        <h6>0x7fed466b893c716235e1B8D685C913f7D2797463</h6>
+                        <br>
+                        <h3>contact@tensorhub.org</h3><br>
+                    </center>
+                </li>
+            </section>
+            <!-- <section id="chart" class="no-bottom parallax">
+                <div class="container relative parallax">
+                    <center>
+                        <h1>Chart</h1>
+                    </center><iframe height="1000" width="100%" id="geckoterminal-embed" title="GeckoTerminal Embed" src="https://www.geckoterminal.com/eth/pools/0x11b815efb8f581194ae79006d24e0d814b7697f6?embed=1&info=1&swaps=1" frameborder="0" allow="clipboard-write"
+                        allowfullscreen></iframe>
+                </div>
+            </section> -->
+            <section id="section-my-quote" aria-label="section" class="jarallax no-top" style="background-size: cover;">
+                <div class="de-gradient-edge-top" style="background-size: cover;"></div>
+                <div class="de-gradient-edge-bottom" style="background-size: cover;"></div>
+            </section>
+        </div>
+        <!-- content close -->
+
+        <!-- footer begin -->
+        <footer>
+            <div class="container" style="background-size: cover;">
+                <div class="row" style="background-size: cover;">
+                    <div class="col-md-6" style="background-size: cover;">
+                        <span class="copy">© Copyright 2024 TensorHub</span>
+                    </div>
+                    <div class="col-md-6" style="background-size: cover;">
+                        <div class="social-icons" style="background-size: cover;">
+                            <a href="https://t.me/tensorhuberc" target="_blank"><i
+                                    class="fa fa-telegram "></i></a>
+                            <a href="https://x.com/tensorhuberc" target="_blank"><i
+                                    class="fa fa-twitter "></i></a>
+                            <a href="https://medium.com/@tensorhuberc" target="_blank"><i class="fa fa-medium "></i></a>
+                            <!-- <a href="#" target="_blank"><i class="fa fa-github "></i></a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- footer close -->
+    </div>
+    <!-- Javascript Files
+    ================================================== -->
+    <script data-cfasync="false" src="cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="data/plugins.js"></script>
+    <script src="data/designesia.js"></script>
+    <script>
+        jQuery(document).ready(function() {
+            $(function() {
+                // jquery typed plugin
+                $(".typed").typed({
+                    stringsElement: $('.typed-strings'),
+                    typeSpeed: 300,
+                    backDelay: 500,
+                    loop: true,
+                    contentType: 'html', // or text
+                    // defaults to false for infinite loop
+                    loopCount: false,
+                    callback: function() {
+                        null;
+                    },
+                    resetCallback: function() {
+                        newTyped();
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+
+</html>
